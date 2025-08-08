@@ -14,7 +14,7 @@ public class CrosshairIndicatorClient implements ClientModInitializer {
 
 	private static final Identifier CROSSHAIR_LAYER = Identifier.of(CrosshairIndicator.MOD_ID, "hud-crosshair-layer");
 	private static final Identifier RED_CROSSHAIR_TEXTURE =
-			Identifier.of(CrosshairIndicator.MOD_ID, "textures/gui/sprites/hud/crosshair.png");
+			Identifier.of(CrosshairIndicator.MOD_ID, "textures/gui/sprites/hud/crosshair_red.png");
 
 	@Override
 	public void onInitializeClient() {
@@ -34,8 +34,8 @@ public class CrosshairIndicatorClient implements ClientModInitializer {
 		context.drawTexture(
 				RenderLayer::getGuiTextured,
 				RED_CROSSHAIR_TEXTURE,
-				((context.getScaledWindowWidth() - 14) / 2) - 1,
-				((context.getScaledWindowHeight() - 14) / 2) - 1,
+				((context.getScaledWindowWidth() - 15) / 2),
+				((context.getScaledWindowHeight() - 15) / 2),
 				0, 0,
 				15, 15,
 				15, 15
