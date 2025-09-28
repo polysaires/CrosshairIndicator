@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "kurayzumi.crosshairindicator.mixin",
+	"package": "net.kurayzumi.crosshairindicator.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 	],

@@ -1,4 +1,4 @@
-package kurayzumi.crosshairindicator;
+package net.kurayzumi.crosshairindicator;
 
 import net.fabricmc.api.ModInitializer;
 
