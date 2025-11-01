@@ -11,25 +11,28 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 
 public class CrosshairIndicatorClient implements ClientModInitializer {
+
+    // temporary till cloth config integration
+    private static final boolean ONLY_HIGHLIGHT_IN_FIRST_PERSON = true;
+
 	@Override
 	public void onInitializeClient() {
         HudElementRegistry.attachElementAfter(
                 VanillaHudElements.CROSSHAIR,
-                Identifier.of(CrosshairIndicator.MOD_ID, "hud-crosshair-layer"),
-                CrosshairIndicatorClient::render);
+                Identifier.of(CrosshairIndicator.MOD_ID, "crosshair-highlight"),
+                CrosshairIndicatorClient::renderHighlight);
 	}
 
-    private static void render(DrawContext context, RenderTickCounter tickCounter) {
+    private static void renderHighlight(DrawContext context, RenderTickCounter tickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null) return;
 
-        HitResult crosshairTarget = client.crosshairTarget;
+        if (!shouldHighlight(client)) return;
 
-        if (crosshairTarget == null) return;
-        if (crosshairTarget.getType() != HitResult.Type.ENTITY) return;
-
-        Identifier texture = Identifier.of(CrosshairIndicator.MOD_ID,
-                "textures/gui/sprites/hud/crosshair_red.png");
+        Identifier texture = Identifier.of(
+                CrosshairIndicator.MOD_ID,
+                "textures/gui/sprites/hud/crosshair_highlighted.png"
+        );
 
         context.drawTexture(
                 RenderPipelines.GUI_TEXTURED,
@@ -40,5 +43,16 @@ public class CrosshairIndicatorClient implements ClientModInitializer {
                 15, 15,
                 15, 15
         );
+    }
+
+    private static boolean shouldHighlight(MinecraftClient client) {
+        HitResult crosshairTarget = client.crosshairTarget;
+        if (crosshairTarget == null) return false;
+        if (crosshairTarget.getType() != HitResult.Type.ENTITY) return false;
+
+        if (ONLY_HIGHLIGHT_IN_FIRST_PERSON &&
+                !client.options.getPerspective().isFirstPerson()) return false;
+
+        return true;
     }
 }
